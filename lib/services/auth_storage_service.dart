@@ -1,5 +1,7 @@
 import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../models/app_user.dart';
 
 class AuthStorageService {
@@ -31,9 +33,12 @@ class AuthStorageService {
   Future<AppUser?> getUser() async {
     final prefs = await SharedPreferences.getInstance();
     final raw = prefs.getString(userKey);
-    if (raw == null || raw.isEmpty) return null;
 
-    return AppUser.fromJson(jsonDecode(raw));
+    if (raw == null || raw.isEmpty) {
+      return null;
+    }
+
+    return AppUser.fromJson(jsonDecode(raw) as Map<String, dynamic>);
   }
 
   Future<bool> hasSession() async {

@@ -18,11 +18,14 @@ class DashboardRouter extends StatelessWidget {
     switch (user.role) {
       case 'parent':
         return ParentDashboardScreen(user: user);
+
       case 'nurse':
       case 'hospital_admin':
         return NurseDashboardScreen(user: user);
+
       case 'super_admin':
         return SuperAdminDashboardScreen(user: user);
+
       default:
         return Scaffold(
           appBar: AppBar(title: const Text('Dashboard')),

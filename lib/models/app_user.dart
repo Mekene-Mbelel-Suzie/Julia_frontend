@@ -12,7 +12,7 @@ class AppUser {
   final Map<String, dynamic>? nurseProfile;
   final Map<String, dynamic>? hospitalAdminProfile;
 
-  AppUser({
+  const AppUser({
     required this.id,
     required this.firstName,
     required this.lastName,
@@ -29,10 +29,11 @@ class AppUser {
 
   factory AppUser.fromJson(Map<String, dynamic> json) {
     return AppUser(
-      id: json['id'],
+      id: json['id'] ?? 0,
       firstName: json['first_name'] ?? '',
       lastName: json['last_name'] ?? '',
-      fullName: json['full_name'] ?? '',
+      fullName: json['full_name'] ??
+          '${json['first_name'] ?? ''} ${json['last_name'] ?? ''}'.trim(),
       email: json['email'] ?? '',
       phone: json['phone'],
       role: json['role'] ?? '',
@@ -67,5 +68,20 @@ class AppUser {
       'nurse_profile': nurseProfile,
       'hospital_admin_profile': hospitalAdminProfile,
     };
+  }
+
+  String get displayRole {
+    switch (role) {
+      case 'super_admin':
+        return 'Super Admin';
+      case 'hospital_admin':
+        return 'Hospital Admin';
+      case 'nurse':
+        return 'Nurse';
+      case 'parent':
+        return 'Parent';
+      default:
+        return role;
+    }
   }
 }
